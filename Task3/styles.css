@@ -61,5 +61,42 @@ h1 {
   background: #fff;
 }
 
+/* Available */
+.spot.available {
+  background: #f0fdf4;
+  border-color: #22c55e;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.spot.available:hover {
+  background: #dcfce7;
+  transform: translateY(-2px);
+}
+
+/* Occupied */
+.spot.ocupied {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #64748b;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Selected */
+.spot.selected {
+  background: #dbeafe;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px #93c5fd inset;
+}
+
+/* Improve summary */
+.summary {
+  padding: 10px;
+  background: #f1f5f9;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
 /* TODO: improve states for .available, .occupied, .selected */
 /* TODO: add hover styles for selectable spots */

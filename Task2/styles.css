@@ -62,5 +62,52 @@ h1 {
   background: #fff;
 }
 
+/* Improve ticket/card style */
+.ticket {
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  background: #ffffff;
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+.ticket:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.ticket:active {
+  cursor: grabbing;
+  opacity: 0.6;
+}
+
+/* Priority styling */
+.ticket small {
+  display: block;
+  margin-top: 6px;
+  color: #6b7280;
+}
+
+/* Dropzone highlight */
+.dropzone.drag-over {
+  background: #eef2ff;
+  border: 2px dashed #6366f1;
+  border-radius: 8px;
+}
+
+/* Column spacing improvment */
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Smooth dropzone */
+.dropzone {
+  flex: 1;
+  transition: background 0.2s ease;
+}
+
 /* TODO: improve ticket/card style and add stronger interaction states */
 /* TODO: add visible dropzone highlight while drag is over it */

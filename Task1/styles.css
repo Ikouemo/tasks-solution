@@ -66,5 +66,63 @@ h1 {
 /* TODO: set required widths:
    Name 28%, Department 22%, Role 28%, Start Date 12%, Monthly Fee 10%
 */
+/* Column widths*/
+.employee-table th:nth-child(1),
+.employee-table td:nth-child(1) {
+  width: 28%;
+}
 
+.employee-table th:nth-child(2),
+.employee-table td:nth-child(2) {
+  width: 22%;
+}
+
+.employee-table th:nth-child(3),
+.employee-table td:nth-child(3) {
+  width: 28%;
+}
+
+.employee-table th:nth-child(4),
+.employee-table td:nth-child(4) {
+  width: 12%;
+}
+
+.employee-table th:nth-child(5),
+.employee-table td:nth-child(5) {
+  width: 10%;
+}
+
+/* Zebra striping */
+.employee-table tbody tr:nth-child(even) {
+  background: #f9fafb;
+}
+
+/* Hover effect */
+.employee-table tbody tr:hover {
+  background: #eef2ff;
+  transition: background 0.2s ease;
+}
+
+/* Header improvments */
+.employee-table th {
+  position: relative;
+  user-select: none;
+}
+
+/* Sortable header hover */
+.employee-table th[data-sortable="true"]:hover {
+  background: #e5e7eb;
+}
+
+/* Active sort indicator */
+.employee-table th[data-sortable="true"] {
+  cursor: pointer;
+}
+
+/* Make arrow clearer */
+.employee-table th::after {
+  font-size: 0.75rem;
+  margin-left: 6px;
+  opacity: 0.6;
+}
 /* TODO: improve sortable header states and active sort indicator visibility */

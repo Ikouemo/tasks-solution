@@ -1,10 +1,30 @@
 const STORAGE_KEY = "task6-ticket-board-v1";
 
 const defaultTickets = [
-  { id: "T-100", title: "Broken barrier in Zone B", priority: "high", status: "todo" },
-  { id: "T-101", title: "Refund request for duplicate charge", priority: "medium", status: "todo" },
-  { id: "T-102", title: "Camera stream lagging", priority: "high", status: "inprogress" },
-  { id: "T-103", title: "Update signage in entrance", priority: "low", status: "done" }
+  {
+    id: "T-100",
+    title: "Broken barrier in Zone B",
+    priority: "high",
+    status: "todo",
+  },
+  {
+    id: "T-101",
+    title: "Refund request for duplicate charge",
+    priority: "medium",
+    status: "todo",
+  },
+  {
+    id: "T-102",
+    title: "Camera stream lagging",
+    priority: "high",
+    status: "inprogress",
+  },
+  {
+    id: "T-103",
+    title: "Update signage in entrance",
+    priority: "low",
+    status: "done",
+  },
 ];
 
 let tickets = loadTickets();
@@ -46,6 +66,17 @@ function render() {
     `;
 
     // TODO: implement dragstart/dragend handlers and set draggedTicketId
+    // Ticket starts being dragged
+    el.addEventListener("dragstart", () => {
+      draggedTicketId = ticket.id; // Store the Id of the dragged ticket
+      el.classList.add("dragging"); // Add CSS class for visual feedback
+    });
+
+    // Ticket is dropped or canceled
+    el.addEventListener("dragend", () => {
+      draggedTicketId = null; // Clear the dragged ticket reference
+      el.classList.remove("dragging"); // Remove the visual highlight
+    });
 
     if (ticket.status === "todo") todoCol.appendChild(el);
     else if (ticket.status === "inprogress") inprogressCol.appendChild(el);
@@ -57,13 +88,13 @@ function render() {
 
 function updateCounts() {
   document.getElementById("count-todo").textContent = String(
-    tickets.filter((t) => t.status === "todo").length
+    tickets.filter((t) => t.status === "todo").length,
   );
   document.getElementById("count-inprogress").textContent = String(
-    tickets.filter((t) => t.status === "inprogress").length
+    tickets.filter((t) => t.status === "inprogress").length,
   );
   document.getElementById("count-done").textContent = String(
-    tickets.filter((t) => t.status === "done").length
+    tickets.filter((t) => t.status === "done").length,
   );
 }
 
@@ -72,12 +103,43 @@ function setupDropzones() {
   zones.forEach((zone) => {
     const status = zone.id.replace("col-", "");
 
+    // Ticket is dragged over a drop zone
+    zone.addEventListener("dragover", (e) => {
+      e.preventDefault(); // Prevents default browser behavior
+      zone.classList.add("drag-over"); // Add a visual indicator that this column can receive the ticket
+    });
+
+    // A dragged ticket leaves a drop zone without dropping
+    zone.addEventListener("dragleave", () => {
+      zone.classList.remove("drag-over"); // Remove the hover/drag-over visual feedback
+    });
+
+    // A dragged ticket is dropped into a drop zone
+    zone.addEventListener("drop", () => {
+      zone.classList.remove("drag-over"); // Remove the drag-over visual feedback
+
+      // Check if no ticket is being dragged, do nothing
+      if (!draggedTicketId) return;
+
+      // Find the ticket object in the array using its ID
+      const ticket = tickets.find((t) => t.id === draggedTicketId);
+      if (!ticket) return; // Check if not exist, do nothing
+
+      // Update the ticket's status to match this drop zone
+      ticket.status = status;
+
+      // Persist the updated tickets to localStorage
+      saveTickets();
+
+      // Re-render the board so the ticket moves visually
+      render();
+    });
+
     // TODO:
     // - prevent default on dragover
     // - add/remove "drag-over" class for visual feedback
     // - on drop: move dragged ticket to this status
     // - persist to localStorage and re-render
-    void status;
   });
 }
 

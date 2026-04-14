@@ -1,11 +1,53 @@
 const rows = [
-  { name: "Lena Fischer", department: "Operations", role: "Supervisor", startDate: "2022-01-17", monthlyFee: 120 },
-  { name: "Jonas Klein", department: "Finance", role: "Analyst", startDate: "2021-11-03", monthlyFee: 90 },
-  { name: "Marta Yilmaz", department: "IT", role: "Developer", startDate: "2023-07-10", monthlyFee: 130 },
-  { name: "Ben Weber", department: "Operations", role: "Coordinator", startDate: "2020-04-21", monthlyFee: 80 },
-  { name: "Nina Roth", department: "HR", role: "Recruiter", startDate: "2022-09-01", monthlyFee: 95 },
-  { name: "Paul Richter", department: "Finance", role: "Controller", startDate: "2020-04-21", monthlyFee: 110 },
-  { name: "Sara Novak", department: "IT", role: "QA Engineer", startDate: "2021-02-14", monthlyFee: 100 }
+  {
+    name: "Lena Fischer",
+    department: "Operations",
+    role: "Supervisor",
+    startDate: "2022-01-17",
+    monthlyFee: 120,
+  },
+  {
+    name: "Jonas Klein",
+    department: "Finance",
+    role: "Analyst",
+    startDate: "2021-11-03",
+    monthlyFee: 90,
+  },
+  {
+    name: "Marta Yilmaz",
+    department: "IT",
+    role: "Developer",
+    startDate: "2023-07-10",
+    monthlyFee: 130,
+  },
+  {
+    name: "Ben Weber",
+    department: "Operations",
+    role: "Coordinator",
+    startDate: "2020-04-21",
+    monthlyFee: 80,
+  },
+  {
+    name: "Nina Roth",
+    department: "HR",
+    role: "Recruiter",
+    startDate: "2022-09-01",
+    monthlyFee: 95,
+  },
+  {
+    name: "Paul Richter",
+    department: "Finance",
+    role: "Controller",
+    startDate: "2020-04-21",
+    monthlyFee: 110,
+  },
+  {
+    name: "Sara Novak",
+    department: "IT",
+    role: "QA Engineer",
+    startDate: "2021-02-14",
+    monthlyFee: 100,
+  },
 ];
 
 const table = document.getElementById("employeeTable");
@@ -14,7 +56,7 @@ const headers = Array.from(table.querySelectorAll("th"));
 
 const state = {
   activeKey: null,
-  direction: "asc"
+  direction: "asc",
 };
 
 function render(data) {
@@ -28,7 +70,7 @@ function render(data) {
         <td>${item.startDate}</td>
         <td>${item.monthlyFee}</td>
       </tr>
-    `
+    `,
     )
     .join("");
 }
@@ -53,6 +95,36 @@ function setHeaderIndicators() {
 }
 
 function sortBy(key, type) {
+  // Toggle direction
+  if (state.activeKey === key) {
+    state.direction = state.direction == "asc" ? "desc" : "asc";
+  } else {
+    state.activeKey = key;
+    state.direction = "asc";
+  }
+
+  // Stable sort: attach original index
+  const indexed = rows.map((item, index) => ({ ...item, _index: index }));
+  indexed.sort((a, b) => {
+    const result = compareValues(a[key], b[key], type);
+
+    if (result === 0) {
+      // preserve original order (stable sort)
+      return a._index - b._index;
+    }
+
+    return state.direction === "asc" ? result : -result;
+  });
+
+  // Remove helper index
+  const sortedData = indexed.map(({ _index, ...rest }) => rest);
+
+  // Render the table again
+  render(sortedData);
+
+  // Update the header
+  setHeaderIndicators();
+
   // TODO:
   // Implement stable sorting with asc/desc toggle.
   // Requirements:

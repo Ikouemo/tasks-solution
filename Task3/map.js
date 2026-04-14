@@ -8,7 +8,7 @@ const spotData = [
   { id: "P-07", status: "available", monthlyFee: 86 },
   { id: "P-08", status: "occupied", monthlyFee: 91 },
   { id: "P-09", status: "available", monthlyFee: 89 },
-  { id: "P-10", status: "available", monthlyFee: 87 }
+  { id: "P-10", status: "available", monthlyFee: 87 },
 ];
 
 const selectedIds = new Set();
@@ -25,13 +25,39 @@ function updateSummary() {
 }
 
 function handleSpotClick(spot) {
+  // Clear any previous error message
+  errorMsg.textContent = "";
+
+  // Check if spot is occupied, do nothing (user cannot select it)
+  if (spot.status === "occupied") return;
+
+  const isSelected = selectedIds.has(spot.id);
+
+  // If the spot is already selected -> remove it (toggle off)
+  if (isSelected) {
+    selectedIds.delete(spot.id);
+  } else {
+    if (selectedIds.size >= 3) {
+      // If not selected yet -> check if user already selected 3 spots
+      errorMsg.textContent = "you can select a maximum of 3 spots.";
+      return; // Stop function execution (do not add new spot)
+    }
+    // Add this spot to the selected set
+    selectedIds.add(spot.id);
+  }
+
+  // Re-render the UI to reflect changes
+  render();
+
+  // Update summary
+  updateSummary();
   // TODO:
   // - ignore occupied spots
   // - toggle selection for available spots
   // - enforce maximum of 3 selected spots
   // - write error message if user exceeds limit
   // - re-render + update summary
-  void spot;
+  //void spot;
 }
 
 function render() {
