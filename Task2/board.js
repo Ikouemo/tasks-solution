@@ -1,4 +1,4 @@
-const STORAGE_KEY = "task6-ticket-board-v1";
+const STORAGE_KEY = "task2-ticket-board-v1"; // Umbenennen "task6" zum "task2"
 
 const defaultTickets = [
   {
@@ -65,7 +65,6 @@ function render() {
       <small>Priority: ${ticket.priority}</small>
     `;
 
-    // TODO: implement dragstart/dragend handlers and set draggedTicketId
     // Ticket starts being dragged
     el.addEventListener("dragstart", () => {
       draggedTicketId = ticket.id; // Store the Id of the dragged ticket
@@ -134,12 +133,6 @@ function setupDropzones() {
       // Re-render the board so the ticket moves visually
       render();
     });
-
-    // TODO:
-    // - prevent default on dragover
-    // - add/remove "drag-over" class for visual feedback
-    // - on drop: move dragged ticket to this status
-    // - persist to localStorage and re-render
   });
 }
 

@@ -34,12 +34,15 @@ h1 {
   gap: 12px;
 }
 
+/* Column spacing improvment */
 .column {
   border: 1px solid #d1d5db;
   border-radius: 10px;
   background: #ffffff;
   min-height: 420px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .column > header {
@@ -49,17 +52,12 @@ h1 {
   background: #f9fafb;
 }
 
+/* Smooth dropzone */
 .dropzone {
   min-height: 360px;
   padding: 10px;
-}
-
-.ticket {
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 10px;
-  background: #fff;
+  flex: 1;
+  transition: background 0.2s ease;
 }
 
 /* Improve ticket/card style */
@@ -96,18 +94,3 @@ h1 {
   border: 2px dashed #6366f1;
   border-radius: 8px;
 }
-
-/* Column spacing improvment */
-.column {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Smooth dropzone */
-.dropzone {
-  flex: 1;
-  transition: background 0.2s ease;
-}
-
-/* TODO: improve ticket/card style and add stronger interaction states */
-/* TODO: add visible dropzone highlight while drag is over it */

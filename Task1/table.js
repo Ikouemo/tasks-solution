@@ -97,7 +97,7 @@ function setHeaderIndicators() {
 function sortBy(key, type) {
   // Toggle direction
   if (state.activeKey === key) {
-    state.direction = state.direction == "asc" ? "desc" : "asc";
+    state.direction = state.direction === "asc" ? "desc" : "asc";
   } else {
     state.activeKey = key;
     state.direction = "asc";
@@ -109,8 +109,7 @@ function sortBy(key, type) {
     const result = compareValues(a[key], b[key], type);
 
     if (result === 0) {
-      // preserve original order (stable sort)
-      return a._index - b._index;
+      return a._index - b._index; // Preserve original order (stable sort)
     }
 
     return state.direction === "asc" ? result : -result;
@@ -124,14 +123,6 @@ function sortBy(key, type) {
 
   // Update the header
   setHeaderIndicators();
-
-  // TODO:
-  // Implement stable sorting with asc/desc toggle.
-  // Requirements:
-  // - Clicking same key toggles direction.
-  // - Clicking a new key sets direction to asc.
-  // - Sorting must be stable.
-  // - Re-render table and update header indicators.
 }
 
 headers.forEach((th) => {

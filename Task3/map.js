@@ -51,13 +51,6 @@ function handleSpotClick(spot) {
 
   // Update summary
   updateSummary();
-  // TODO:
-  // - ignore occupied spots
-  // - toggle selection for available spots
-  // - enforce maximum of 3 selected spots
-  // - write error message if user exceeds limit
-  // - re-render + update summary
-  //void spot;
 }
 
 function render() {

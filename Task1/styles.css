@@ -63,10 +63,7 @@ h1 {
   font-weight: 600;
 }
 
-/* TODO: set required widths:
-   Name 28%, Department 22%, Role 28%, Start Date 12%, Monthly Fee 10%
-*/
-/* Column widths*/
+/* Column widths */
 .employee-table th:nth-child(1),
 .employee-table td:nth-child(1) {
   width: 28%;
@@ -118,11 +115,3 @@ h1 {
 .employee-table th[data-sortable="true"] {
   cursor: pointer;
 }
-
-/* Make arrow clearer */
-.employee-table th::after {
-  font-size: 0.75rem;
-  margin-left: 6px;
-  opacity: 0.6;
-}
-/* TODO: improve sortable header states and active sort indicator visibility */
